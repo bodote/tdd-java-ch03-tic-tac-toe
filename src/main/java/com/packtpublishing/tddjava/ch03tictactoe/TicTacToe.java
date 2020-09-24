@@ -8,9 +8,9 @@ public class TicTacToe {
 	String ausserhalbError = " ist außerhalb des Spielfeldes";
 
 	public void place(int x, int y) throws RuntimeException {
-		if (x > 2 || x < 0)
+		if (x > 3 || x < 1)
 			throw new RuntimeException("X = " + Integer.toString(x) + ausserhalbError);
-		if (y > 2 || y < 0)
+		if (y > 3 || y < 1)
 			throw new RuntimeException("Y = " + Integer.toString(y) + ausserhalbError);
 
 		return;
