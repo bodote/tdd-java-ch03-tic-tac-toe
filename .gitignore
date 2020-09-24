@@ -3,3 +3,10 @@ gradlew.bat
 *.iml
 .idea
 gradle
+build
+bin
+.vscode
+.gradle
+.classpath
+.project
+.settings
