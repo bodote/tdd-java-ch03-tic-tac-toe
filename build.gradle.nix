@@ -4,11 +4,8 @@ plugins {
   id 'info.solidsoft.pitest' version '1.5.1'
 }
 
-group 'com.packtpublishing.tddjava.ch03tictactoe' //needed by pitest!
-version '1.0-SNAPSHOT'
-
 sourceCompatibility = 11
-targetCompatibility = 11
+version = '1.0'
 
 repositories {
     mavenCentral()
@@ -17,29 +14,19 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.13'
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.0")
     implementation 'org.junit.jupiter:junit-jupiter:5.4.2'
     dependencies { testCompile "org.mockito:mockito-core:2.+" }
-}
-
-jacocoTestReport {
-    reports {
-        xml.enabled false
-        html.enabled true
-    }
 }
 test {
   useJUnitPlatform()
   finalizedBy jacocoTestReport
 }
+
 jacocoTestReport {
   dependsOn test   
 }
+ 
 pitest {
-  //junit5PluginVersion = '0.12'
-  timestampedReports = false 
-  verbose = false   
+  junit5PluginVersion = '0.12'
+  timestampedReports = false    
 }
-
-check.dependsOn jacocoTestReport

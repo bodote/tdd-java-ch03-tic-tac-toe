@@ -2,7 +2,7 @@ package com.packtpublishing.tddjava.ch03tictactoe;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-
+import org.junit.experimental.categories.Category;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -63,7 +63,7 @@ public class TicTacToeSpec {
 	}
 
 	@Test
-	public void nach3ZuegenEineReiheXGewinnt() {
+	public void nach3ZuegenErsteSpalteXGewinnt() {
 		game.play(1, 1);
 		game.play(3, 1);
 		game.play(1, 2);
@@ -71,9 +71,24 @@ public class TicTacToeSpec {
 
 		assertEquals("X hat gewonnen", game.play(1, 3));
 	}
+	@Test
+	public void nach3ZuegenZweiteOderDritteSpalteXGewinnt() {
+		game.play(2, 1);
+		game.play(3, 1);
+		game.play(2, 2);
+		game.play(3, 2);
+		assertEquals("X hat gewonnen", game.play(2, 3));
+
+		game = new TicTacToe();
+		game.play(3, 1);
+		game.play(2, 1);
+		game.play(3, 2);
+		game.play(2, 2);
+		assertEquals("X hat gewonnen", game.play(3, 3));
+	}
 
 	@Test
-	public void nach3ZuegenEineSpalteXGewinnt() {
+	public void nach3ZuegenErsteReiheXGewinnt() {
 		game.play(1, 1);
 		game.play(2, 2);
 		game.play(2, 1);
@@ -81,14 +96,52 @@ public class TicTacToeSpec {
 
 		assertEquals("X hat gewonnen", game.play(3, 1));
 	}
-
 	@Test
+	public void nach3ZuegenZweiteReiheXGewinnt() {
+		game.play(1, 2);
+		game.play(2, 1);
+		game.play(2, 2);
+		game.play(3, 3);
+
+		assertEquals("X hat gewonnen", game.play(3, 2));
+	}
+	@Test
+	public void nach3ZuegenDritteReiheXGewinntXXX() {
+		game.play(1, 3);
+		game.play(2, 1);
+		game.play(2, 3);
+		game.play(3, 2);
+		game.play(3, 3);
+		//assertEquals("X hat gewonnen", game.play(3, 3));
+	}
+	@Test
+	@Category(DiagonalTest.class)
 	public void nach3ZuegenDiagonalXGewinnt() {
 		game.play(1, 1);
+		game.play(1, 3);
+		game.play(2, 2);
+		game.play(2, 1);
+
+		assertEquals("X hat gewonnen", game.play(3, 3));
+	}
+	@Test
+	public void nach3ZuegenDiagonal2XGewinnt() {
+		game.play(1, 3);
 		game.play(1, 2);
+		game.play(2, 2);
+		game.play(2, 1);
+
+		assertEquals("X hat gewonnen", game.play(3, 1));
+	}
+
+	@Test
+	public void nach3ZuegenDiagonalOGewinnt() {
+		game.play(1, 1);
+		game.play(1, 3);
+		game.play(2, 1);
 		game.play(2, 2);
 		game.play(3, 2);
 
-		assertEquals("X hat gewonnen", game.play(3, 3));
+		assertEquals("O hat gewonnen", game.play(3, 1));
 	}
 }

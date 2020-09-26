@@ -6,9 +6,10 @@ import java.util.List;
 
 public class TicTacToe {
 
-	//private char[][] spielbrett = {{'\0', '\0', '\0'}, {'\0', '\0', '\0'}, {'\0', '\0', '\0'}};
+	// private char[][] spielbrett = {{'\0', '\0', '\0'}, {'\0', '\0', '\0'}, {'\0',
+	// '\0', '\0'}};
 	private ArrayList<List<Character>> spielbrett = new ArrayList<>(3);
-
+	String keinGewinner = "kein Gewinner";
 	private String ausserhalbError = " ist außerhalb des Spielfeldes";
 	private char nextPlayer = 'X';
 
@@ -25,35 +26,45 @@ public class TicTacToe {
 
 		setBox(x, y);
 
-		if (checkGewinner('X').equals("X hat gewonnen"))
+		if (checkGewinner('X') == ('X'))
 			return "X hat gewonnen";
-		if (checkGewinner('Y').equals("Y hat gewonnen"))
-			return "Y hat gewonnen";
-		return "kein Gewinner";
+		if (checkGewinner('O') == ('O'))
+			return "O hat gewonnen";
+		return keinGewinner;
 
 	}
 
-	private String checkGewinner(char player) {
-		long volleReihe = spielbrett.stream().filter(row -> checkRow(player, row) != "kein Gewinner").count();
+	private char checkGewinner(char player) {
+		long volleReihe = spielbrett.stream().filter(row -> checkRow(player, row) == player).count();
 		if (volleReihe > 0)
-			return Character.toString(player) + " hat gewonnen";
+			return player;
 
-		long volleSpaten = spielbrett.stream().filter(row -> row.get(0).equals(player)).count() + spielbrett.stream().filter(row -> row.get(1).equals(player)).count() + spielbrett.stream().filter(row -> row.get(2).equals(player)).count();
-		if (volleSpaten == 3)
-			return Character.toString(player) + " hat gewonnen";
+		if ((spielbrett.stream().filter(row -> row.get(0).equals(player)).count() == 3)
+				|| (spielbrett.stream().filter(row -> row.get(1).equals(player)).count() == 3)
+				|| (spielbrett.stream().filter(row -> row.get(2).equals(player)).count() == 3))
+			return player;
 		// diagonal
-		if ((spielbrett.get(0).get(0).equals(player) && spielbrett.get(1).get(1).equals(player) && spielbrett.get(2).get(2).equals(player)) || (spielbrett.get(2).get(0).equals(player) && spielbrett.get(1).get(1).equals(player) && spielbrett.get(0).get(2).equals(player)))
-			return Character.toString(player) + " hat gewonnen";
+		if ((spielbrett.get(0).get(0).equals(player) && spielbrett.get(1).get(1).equals(player)
+				&& spielbrett.get(2).get(2).equals(player)))
+			return player;
+		boolean b1 = spielbrett.get(2).get(0).equals(player);
+		boolean b2 = spielbrett.get(1).get(1).equals(player);
+		boolean b3 = spielbrett.get(0).get(2).equals(player);
+		if (b3 ) {
+			if (b2 ) 
+				if (b1)
+					return player;
+		}
 
-		return "kein Gewinner";
+		return '.';
 
 	}
 
-	private String checkRow(char player, List row) {
+	private char checkRow(char player, List row) {
 		long elementsOfPlayer = row.stream().filter(element -> element.equals(player)).count();
 		if (elementsOfPlayer == 3)
-			return Character.toString(player) + " hat gewonnen";
-		return "kein Gewinner";
+			return player;
+		return '.';
 	}
 
 	private void setBox(int x, int y) {
